@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    function domTokenList(el) {
+        Object.defineProperty(this, "value",{
+            enumerable: false,
+            set(value) {
+                console.log('valueSet');
+                el.className = value;
+            }
+        })
+    }
+
+    domTokenList.prototype = {
+        constructor: domTokenList,
+        add(cla) {
+            [].push.call(this, cla);
+            this.value = [].join.call(this, " ");
+        }
+    }
+    Object.defineProperty(HTMLElement.prototype, "classList", {
+        get() {
+            console.log("classlistGet");
+            if (!this.__dtl__) {
+                this.__dtl__ = this.className.split(" ");
+                this.__dtl__.__proto__ = new domTokenList(this);
+
+            }
+            return this.__dtl__;
+        }
+    })
+    div.classList.add("aa");
+</script>
+</body>
+</html>
