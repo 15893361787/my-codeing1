@@ -1,14 +1,13 @@
 let myPromise = require('./my-promise');
-let promise1 = new myPromise((resolve, reject) => {
-    resolve('成功')
-});
-promise1.then((res) => {
-        return '再次成功'
-    },
-    (err) => {
-        console.log(err);
-    }).then(res => {
-    console.log(res);
-}, (err) => {
-    console.log(err);
-})
+new myPromise((resolve)=>{
+    resolve(11);
+}).then(()=>{
+    return new Promise((resolve,rejected)=>{
+        setTimeout(function () {
+            setTimeout(()=>{
+                resolve("最终结果")
+            },1000)
+        },1000)
+    })
+}).then(res=>{
+    console.log(res);})

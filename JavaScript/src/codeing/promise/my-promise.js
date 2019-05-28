@@ -34,9 +34,11 @@ function resolvePromise(promise, result, resolve, reject) {
     }
     try {
         if (result != null && typeof result === 'object' || typeof result === 'function') {
-            let then = result['then'];
+            let then = result.then;
             if (typeof then == 'function') {
-                then.call(result, (res) => {resolve(res);}, (err) => {reject(err);});
+                then.call(result, (res) => {
+
+                    resolvePromise(promise,res,resolve,reject);}, (err) => {reject(err);});
             } else {
                 resolve(result);
             }
