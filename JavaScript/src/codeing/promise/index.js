@@ -9,4 +9,6 @@ promise1.then((res) => {
         console.log(err);
     }).then(res => {
     console.log(res);
+}, (err) => {
+    console.log(err);
 })
