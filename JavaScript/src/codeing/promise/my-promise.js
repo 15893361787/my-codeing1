@@ -33,12 +33,23 @@ function resolvePromise(promise, result, resolve, reject) {
         return reject(new TypeError('循环引用'))
     }
     try {
+        let called;
         if (result != null && typeof result === 'object' || typeof result === 'function') {
             let then = result.then;
             if (typeof then == 'function') {
                 then.call(result, (res) => {
-
-                    resolvePromise(promise,res,resolve,reject);}, (err) => {reject(err);});
+                    if (called) {
+                        return;
+                    }
+                    called = true;
+                    resolvePromise(promise, res, resolve, reject);
+                }, (err) => {
+                    if (called) {
+                        return;
+                    }
+                    called = true;
+                    reject(err);
+                });
             } else {
                 resolve(result);
             }
@@ -46,6 +57,10 @@ function resolvePromise(promise, result, resolve, reject) {
             resolve(result)
         }
     } catch (e) {
+        if (called) {
+            return;
+        }
+        called = true;
         reject(e);
     }
 
@@ -53,6 +68,7 @@ function resolvePromise(promise, result, resolve, reject) {
 
 myPromise.prototype.then = function (onfilled, onRejected) {
     let self = this;
+
     let promiseTemp = new myPromise((resolve, reject) => {
         if (self.status == "resolve") {
             try {

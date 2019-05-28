@@ -2,7 +2,7 @@ let myPromise = require('./my-promise');
 new myPromise((resolve)=>{
     resolve(11);
 }).then(()=>{
-    return new Promise((resolve,rejected)=>{
+    return new myPromise((resolve,rejected)=>{
         setTimeout(function () {
             setTimeout(()=>{
                 resolve("最终结果")
