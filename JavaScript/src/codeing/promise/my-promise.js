@@ -68,7 +68,8 @@ function resolvePromise(promise, result, resolve, reject) {
 
 myPromise.prototype.then = function (onfilled, onRejected) {
     let self = this;
-
+onfilled=typeof onfilled=='function'?onfilled:res=>{return res};
+onRejected=typeof onRejected=='function'?onRejected:err=>{throw err;}
     let promiseTemp = new myPromise((resolve, reject) => {
         if (self.status == "resolve") {
             try {
