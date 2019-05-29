@@ -38,18 +38,11 @@ function resolvePromise(promise, result, resolve, reject) {
             let then = result.then;
             if (typeof then == 'function') {
                 then.call(result, (res) => {
-                    if (called) {
-                        return;
-                    }
+                    if (called) {return;}
                     called = true;
                     resolvePromise(promise, res, resolve, reject);
-                }, (err) => {
-                    if (called) {
-                        return;
-                    }
-                    called = true;
-                    reject(err);
-                });
+                    },
+                    (err) => {if (called) {return;} called = true; reject(err);});
             } else {
                 resolve(result);
             }
