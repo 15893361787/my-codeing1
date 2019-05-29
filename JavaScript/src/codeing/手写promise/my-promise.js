@@ -118,6 +118,17 @@ myPromise.prototype.then = function (onfilled, onRejected) {
     return promiseTemp;
 
 }
-
+myPromise.prototype.race=function(value){
+    return new myPromise((resolve,reject)=>{
+        for (let i=0;i<value.length;i++){
+            let current = value[i];
+            if (current&&current.then&&typeof current=='function'){
+                current.then(resolve,reject);
+            } else {
+                resolve(current);
+            }
+        }
+    })
+}
 
 module.exports = myPromise;
