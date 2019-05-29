@@ -1,12 +1,12 @@
 function myPromise(excutor) {
     let self = this;
-    self.status = "pending"
+    self.status = "pending";
     self.value = undefined;
     self.onResolveCallbacks = [];
     self.onRejectedCallbacks = [];
 
     function resolve(value) {
-        if (self.status == "pending") {
+        if (self.status === "pending") {
             self.status = "resolve";
             self.value = value;
             self.onResolveCallbacks.forEach((fun) => {
