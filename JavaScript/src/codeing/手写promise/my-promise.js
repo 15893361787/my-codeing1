@@ -38,11 +38,19 @@ function resolvePromise(promise, result, resolve, reject) {
             let then = result.then;
             if (typeof then == 'function') {
                 then.call(result, (res) => {
-                    if (called) {return;}
-                    called = true;
-                    resolvePromise(promise, res, resolve, reject);
+                        if (called) {
+                            return;
+                        }
+                        called = true;
+                        resolvePromise(promise, res, resolve, reject);
                     },
-                    (err) => {if (called) {return;} called = true; reject(err);});
+                    (err) => {
+                        if (called) {
+                            return;
+                        }
+                        called = true;
+                        reject(err);
+                    });
             } else {
                 resolve(result);
             }
@@ -61,8 +69,12 @@ function resolvePromise(promise, result, resolve, reject) {
 
 myPromise.prototype.then = function (onfilled, onRejected) {
     let self = this;
-    onfilled = typeof onfilled == 'function' ? onfilled : res => {return res};
-    onRejected = typeof onRejected == 'function' ? onRejected : err => {throw err;}
+    onfilled = typeof onfilled == 'function' ? onfilled : res => {
+        return res
+    };
+    onRejected = typeof onRejected == 'function' ? onRejected : err => {
+        throw err;
+    }
     let promiseTemp = new myPromise((resolve, reject) => {
         if (self.status == "resolve") {
             try {
