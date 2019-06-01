@@ -1,12 +1,12 @@
 function myPromise(excutor) {
     let self = this;
-    self.status = "pending"
+    self.status = "pending";
     self.value = undefined;
     self.onResolveCallbacks = [];
     self.onRejectedCallbacks = [];
 
     function resolve(value) {
-        if (self.status == "pending") {
+        if (self.status === "pending") {
             self.status = "resolve";
             self.value = value;
             self.onResolveCallbacks.forEach((fun) => {
@@ -16,7 +16,7 @@ function myPromise(excutor) {
     }
 
     function reject(reason) {
-        if (self.status == "pending") {
+        if (self.status === "pending") {
             self.status = "rejected";
             self.value = reason;
             self.onRejectedCallbacks.forEach((fun) => {
@@ -29,13 +29,14 @@ function myPromise(excutor) {
 }
 
 function resolvePromise(promise, result, resolve, reject) {
-    if (promise == result) {
+    if (promise === result) {
         return reject(new TypeError('循环引用'))
     }
+    let called=null;
     try {
-        let called;
+
         if (result != null && typeof result === 'object' || typeof result === 'function') {
-            let then = result.then;
+            let then = result['then'];
             if (typeof then == 'function') {
                 then.call(result, (res) => {
                         if (called) {
@@ -67,25 +68,25 @@ function resolvePromise(promise, result, resolve, reject) {
 
 }
 
-myPromise.prototype.then = function (onfilled, onRejected) {
+myPromise.prototype.then = function (onFilled, onRejected) {
     let self = this;
-    onfilled = typeof onfilled == 'function' ? onfilled : res => {
+    onFilled = typeof onFilled == 'function' ? onFilled : res => {
         return res
     };
     onRejected = typeof onRejected == 'function' ? onRejected : err => {
         throw err;
-    }
-    let promiseTemp = new myPromise((resolve, reject) => {
-        if (self.status == "resolve") {
+    };
+    return new myPromise((resolve, reject) => {
+        if (self.status === "resolve") {
             try {
-                let result = onfilled(self.value);
+                let result = onFilled(self.value);
                 resolvePromise(this, result, resolve, reject);
             } catch (e) {
                 reject(e);
             }
 
         }
-        if (self.status == "rejected") {
+        if (self.status === "rejected") {
             try {
                 let result = onRejected(self.value);
                 resolvePromise(this, result, resolve, reject);
@@ -94,10 +95,10 @@ myPromise.prototype.then = function (onfilled, onRejected) {
             }
 
         }
-        if (self.status = "pending") {
+        if (self.status === "pending") {
             self.onResolveCallbacks.push(() => {
                 try {
-                    let result = onfilled(self.value);
+                    let result = onFilled(self.value);
                     resolvePromise(this, result, resolve, reject);
                 } catch (e) {
                     reject(e)
@@ -115,7 +116,6 @@ myPromise.prototype.then = function (onfilled, onRejected) {
             });
         }
     });
-    return promiseTemp;
 
 }
 myPromise.prototype.race=function(value){
@@ -131,4 +131,4 @@ myPromise.prototype.race=function(value){
     })
 }
 
-module.exports = myPromise;
+moudle.exports = myPromise;
