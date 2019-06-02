@@ -117,7 +117,7 @@ myPromise.prototype.then = function (onFilled, onRejected) {
         }
     });
 
-}
+};
 myPromise.prototype.race=function(value){
     return new myPromise((resolve,reject)=>{
         for (let i=0;i<value.length;i++){
@@ -129,6 +129,6 @@ myPromise.prototype.race=function(value){
             }
         }
     })
-}
+};
 
 moudle.exports = myPromise;
