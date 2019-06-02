@@ -131,4 +131,5 @@ myPromise.prototype.race=function(value){
     })
 };
 
-moudle.exports = myPromise;
+module.exports = myPromise;
+
