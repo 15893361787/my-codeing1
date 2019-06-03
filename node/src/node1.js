@@ -1,4 +1,4 @@
-/*node*/
+
 /**
  * @description function
  * @return {function}
