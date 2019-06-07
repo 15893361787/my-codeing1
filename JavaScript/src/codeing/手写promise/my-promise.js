@@ -1,4 +1,4 @@
-function myPromise(excutor) {
+function myPromise(executor) {
     let self = this;
     self.status = "pending";
     self.value = undefined;
@@ -25,7 +25,7 @@ function myPromise(excutor) {
         }
     }
 
-    excutor(resolve, reject);
+    executor(resolve, reject);
 }
 
 function resolvePromise(promise, result, resolve, reject) {
