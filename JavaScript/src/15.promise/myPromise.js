@@ -1,6 +1,6 @@
 class Promise {
     constructor(excutor) {
-111
+        console.log('test分支');
     }
 }
 
