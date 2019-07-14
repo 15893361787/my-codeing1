@@ -1,6 +1,6 @@
 class Promise {
     constructor(excutor) {
-1111
+
     }
 }
 
