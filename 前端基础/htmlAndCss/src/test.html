@@ -3,10 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .box {
+
+            overflow: hidden;
+
+        }
+
+        .box > div{
+
+            /**
+
+            * padding-bottom 设置比较大的正值。
+
+            * margin-bottom 设置绝对值大的负值。
+
+            **/
+
+            padding-bottom: 10000px;
+
+            margin-bottom: -10000px;
+
+            float:left;
+
+            width:30%;
+
+        }
+
+        .left {
+
+            background-color: greenyellow;
+
+        }
+
+        .center {
+
+            background-color: gray;
+
+        }
+
+        .right {
+
+            background-color: yellowgreen;
+
+        }
+    </style>
 </head>
 <body>
 
-<div id="div"></div>
+<div class="box">
+
+    <div class="left"></div>
+
+    <div class="center"></div>
+
+    <div class="right"></div>
+    <div class="left"></div>
+
+    <div class="center"></div>
+
+    <div class="right"></div>
+    <div class="left"></div>
+
+    <div class="center"></div>
+
+    <div class="right"></div>
+    <div class="left"></div>
+
+    <div class="center"></div>
+
+    <div class="right"></div>
+    <div class="left"></div>
+
+    <div class="center"></div>
+
+    <div class="right"></div>
+    <div class="left"></div>
+
+    <div class="center"></div>
+
+    <div class="right"></div>
+
+</div>
 
 </body>
 </html>
