@@ -1,0 +1,26 @@
+html{
+    background-color: black;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+.wrap{
+    width: 150px;
+    height: 150px;
+    margin: 150px auto;
+}
+.wrap>.img-list{
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 3000px;
+}
+.img-list>img{
+   width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 8px gainsboro;
+}
