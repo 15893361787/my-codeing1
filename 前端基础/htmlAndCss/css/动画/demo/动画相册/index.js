@@ -15,5 +15,4 @@ window.onload = function () {
     num++;
     imgList.style.transform=` rotateX(-10deg) rotateY(${num*0.2}deg)  `;
   },30)
-
 };
