@@ -13,3 +13,13 @@ Array.prototype.myFlat = function(n=1){
  let r = [1,[2,[3,[4,[5,[6]]]]]].myFlat();
  console.log(r);
 ```
+#### toString
+```typescript
+var arr = [1, [2, [3, 4]]];
+
+function flatten(arr) {
+    return arr.toString().split(',').map(function(item){
+        return +item
+    })
+}
+```
