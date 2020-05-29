@@ -5,7 +5,7 @@
 > + 构造函数会立即执行
 > + 状态无法从外部改变
 > + 一旦执行就无法取消
-> + this回调走的异步操作,也就意味着没有自己的this
+> + then回调走的异步操作,也就意味着没有自己的this
 > + 内部异常统一处理 但是如果不去手动在then回调或者catch中处理的话默认会把错误抛出,这是浏览器后来新增的一个特性会向浏览器unhandledrejection 事件
 #### promise A+规范
 https://juejin.im/post/5b6161e6f265da0f8145fb72#heading-3

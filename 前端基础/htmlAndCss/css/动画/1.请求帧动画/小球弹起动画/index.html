@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta content="requestAnimationFrame实现皮球落地的缓动效果 » 张鑫旭-鑫空间-鑫生活" http-equiv="description"/>
+  <meta name="description" content="张鑫旭web前端学习实例页面 requestAnimationFrame实现皮球落地的缓动效果"/>
+  <meta name="keywords" content="requestAnimationFrame, 缓动, 动画, easeoutBounce"/>
+  <meta name="author" content="张鑫旭, zhangxixnu"/>
+  <title>requestAnimationFrame实现皮球落地的缓动效果 » 张鑫旭-鑫空间-鑫生活</title>
+  <!--<link rel="stylesheet" href="../css/demo.css" type="text/css" />-->
+  <script>
+    document.createElement("ball");
+    document.createElement("shadow");
+  </script>
+  <style>
+    .demo {
+      height: 600px;
+      position: relative;
+    }
+
+    h4 {
+      text-align: center;
+      font-size: 110%;
+    }
+
+    ball {
+      width: 100px;
+      height: 100px;
+      border-radius: 100px;
+      position: absolute;
+      left: 50%;
+      top: 500px;
+      margin-left: -50px;
+      background-color: #34538b;
+      background-image: -webkit-radial-gradient(100px 100px at 50px 20px, #a0b3d6, #34538b);
+      background-image: -moz-radial-gradient(100px 100px at 50px 20px, #a0b3d6, #34538b);
+      background-image: radial-gradient(100px 100px at 50px 20px, #a0b3d6, #34538b);
+      cursor: move;
+      z-index: 1;
+    }
+
+    shadow {
+      position: absolute;
+      width: 100px;
+      height: 30px;
+      position: absolute;
+      left: 50%;
+      bottom: 5px;
+      margin-left: -50px;
+      background-image: -webkit-radial-gradient(ellipse closest-side, rgba(0, 0, 0, .75), rgba(0, 0, 0, 0));
+      background-image: -moz-radial-gradient(ellipse closest-side, rgba(0, 0, 0, .75), rgba(0, 0, 0, 0));
+      background-image: radial-gradient(ellipse closest-side, rgba(0, 0, 0, .75), rgba(0, 0, 0, 0));
+    }
+  </style>
+</head>
+
+<body>
+<div id="main">
+
+  <div id="body" class="light">
+    <div id="content" class="show">
+      <div class="demo">
+        <h4>向上拖动小球然后放下</h4>
+        <ball></ball>
+        <shadow></shadow>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="//apps.bdimg.com/libs/jquery/1.4.4/jquery.min.js"></script>
+<script src="requestAnimationFrame.js"></script>
+<script src="tween.js"></script>
+<script>
+  const ball = $("ball"), shadow = $("shadow");
+  var objBall = {};
+  const shadowWithBall = function () {
+      // 0 ~ 500
+      const top = parseInt(ball.css("top")),
+        scale = 1 + (500 - top) / 300;
+      opacity = 1 - (500 - top) / 300;
+      if (opacity < 0) opacity = 0;
+      shadow.css("opacity", opacity)
+        .css("WebkitTransform", "scale(" + [scale, scale].join(",") + ")")
+        .css("transform", "scale(" + [scale, scale].join(",") + ")");
+    },
+    funFall = function () {
+      var start = 0, during = 100;
+      var _run = function () {
+        start++;
+        var top = Tween.Bounce.easeOut(start, objBall.top, 500 - objBall.top, during);
+        ball.css("top", top);
+        shadowWithBall(top);
+        if (start < during) requestAnimationFrame(_run);
+      };
+      _run();
+    };
+  ball.bind("mousedown", function (event) {
+    console.log('点击鼠标');
+    objBall.pageY = event.pageY;
+    objBall.flagFollow = true;
+  });
+  $('.demo').bind("mousemove", function (event) {
+    event.preventDefault();
+    if (objBall.flagFollow) {
+      var pageY = event.pageY;
+      objBall.top = 500 - (objBall.pageY - pageY);
+      if (objBall.top < 0) {
+        objBall.top = 0;
+      } else if (objBall.top > 500) {
+        objBall.top = 500;
+      }
+      //cosnole.log(objBall.top);
+      ball.css("top", objBall.top);
+      shadowWithBall(objBall.top);
+    }
+  });
+  $('.demo').bind("mouseup", function (event) {
+    if (objBall.flagFollow) funFall();
+    objBall.flagFollow = false;
+    console.log('松开鼠标');
+  });
+</script>
+
+
+</body>
+</html>
