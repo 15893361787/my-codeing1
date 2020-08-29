@@ -4,87 +4,42 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        .box {
-
+        .stack {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            perspective: 1000px;
+        perspective-origin: 50% 150%; 
+        -webkit-perspective: 1000px;
+            -webkit-perspective-origin: 50% 150%;
+            margin: 0;
+            padding: 0;
+        }
+        .stack-item{
+            background: #fff;
+            height: 100%;
+            width: 100%;
+            border-radius: 4px;
+            text-align: center;
             overflow: hidden;
-
         }
-
-        .box > div{
-
-            /**
-
-            * padding-bottom 设置比较大的正值。
-
-            * margin-bottom 设置绝对值大的负值。
-
-            **/
-
-            padding-bottom: 10000px;
-
-            margin-bottom: -10000px;
-
-            float:left;
-
-            width:30%;
-
-        }
-
-        .left {
-
-            background-color: greenyellow;
-
-        }
-
-        .center {
-
-            background-color: gray;
-
-        }
-
-        .right {
-
-            background-color: yellowgreen;
-
+        .stack-item img {
+            width: 100%;
+            display: block;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-<div class="box">
 
-    <div class="left"></div>
-
-    <div class="center"></div>
-
-    <div class="right"></div>
-    <div class="left"></div>
-
-    <div class="center"></div>
-
-    <div class="right"></div>
-    <div class="left"></div>
-
-    <div class="center"></div>
-
-    <div class="right"></div>
-    <div class="left"></div>
-
-    <div class="center"></div>
-
-    <div class="right"></div>
-    <div class="left"></div>
-
-    <div class="center"></div>
-
-    <div class="right"></div>
-    <div class="left"></div>
-
-    <div class="center"></div>
-
-    <div class="right"></div>
-
-</div>
+<ul class="stack">
+    <li class="stack-item" style="transform: translate3d(0px, 0px, 0px);opacity: 1;z-index: 10;"><div>11</div></li>
+    <li class="stack-item" style="transform: translate3d(0px, 0px, -60px);opacity: 1;z-index: 1"><div>22</div></li>
+    <li class="stack-item" style="transform: translate3d(0px, 0px, -120px);opacity: 1;z-index: 1"><div>33</div></li>
+    <li class="stack-item" style="transform: translate3d(0px, 0px, -180px);opacity: 0;z-index: -1"><div>44</div></li>
+    <li class="stack-item" style="transform: translate3d(0px, 0px, -180px);opacity: 0;z-index: -1"><div>55</div></li>
+</ul>
 
 </body>
 </html>
